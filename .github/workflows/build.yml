@@ -23,11 +23,13 @@ jobs:
           pip install --upgrade pip
           pip install "cython<3.0.0" buildozer wheel
 
-      - name: Run Buildozer Build
+      - name: Setup Android SDK Licenses
         run: |
           mkdir -p ~/.android
           touch ~/.android/repositories.cfg
+          yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses || true
+
+      - name: Run Buildozer Build
+        run: |
           buildozer android debug
-        env:
-          BUILDOZER_ACCEPT_ANDROID_SDK_LICENSE: "1"
           
