@@ -23,6 +23,10 @@ jobs:
           pip install --upgrade pip
           pip install "cython<3.0.0" buildozer wheel
 
+      - name: Clean Buildozer Cache
+        run: |
+          buildozer android clean
+
       - name: Run Buildozer Build
         run: |
           buildozer android debug
