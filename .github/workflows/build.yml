@@ -8,25 +8,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-    - name: Install System Dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential libffi-dev python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev openjdk-17-jdk-headless unzip autoconf libtool pkg-config
-        pip install --upgrade pip
-        pip install "cython<3.0.0" buildozer wheel
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libffi-dev python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev blockheader openjdk-17-jdk
+          pip install --upgrade pip
+          pip install "cython<3.0.0" buildozer wheel
 
-     - name: Run Buildozer Build
-      run: |
+      - name: Run Buildozer Build
+        run: |
           mkdir -p ~/.android
           touch ~/.android/repositories.cfg
-          yes | sdkmanager --licenses || true
           buildozer android debug
+        env:
+          BUILDOZER_ACCEPT_ANDROID_SDK_LICENSE: "1"
           
