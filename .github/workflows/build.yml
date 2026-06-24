@@ -21,7 +21,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential libffi-dev python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev openjdk-17-jdk autoconf automake libtool pkg-config zlib1g-dev libasound2-dev libpulse-dev
           pip install --upgrade pip
-          pip install "cython<3.0.0" buildozer wheel
+          pip install "cython<3.0.0" wheel
+          pip install git+https://github.com/kivy/buildozer.git@master
 
       - name: Run Buildozer Build
         run: |
