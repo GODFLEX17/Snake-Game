@@ -26,5 +26,6 @@ jobs:
 
       - name: Run Buildozer Build
         run: |
-          buildozer android debug
+          buildozer android clean
+          buildozer android debug || buildozer android debug
           
