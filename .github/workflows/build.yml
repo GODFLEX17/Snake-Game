@@ -24,23 +24,27 @@ jobs:
           pip install "cython<3.0.0" wheel
           pip install buildozer
 
-      - name: Auto-Accept Android SDK Licenses
+      - name: Pre-Accept Android SDK Licenses (Ultimate Hack)
         run: |
           mkdir -p ~/.android
           touch ~/.android/repositories.cfg
-          # Buildozer ke khud ke downloaded sdkmanager ko dhund kar use chalana
-          export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
-          if [ -d "$ANDROID_HOME/cmdline-tools/latest/bin" ]; then
-            yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
-          fi
+          
+          # Buildozer jahan Android SDK banata hai, wahan pehle se licenses folder bana do
+          mkdir -p $HOME/.buildozer/android/platform/android-sdk/licenses
+          
+          # Saare standard Google Android license hashes ko pehle se file me daal do
+          echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55\nd56f5187479451eabf01fb743130245313546e14\n24333f8a63b6825ea9c5514f83c2829b004d1fee" > $HOME/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+          echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd\n504667f4c0de7af1a06de9f4b1727b84351f291d" > $HOME/.buildozer/android/platform/android-sdk/licenses/android-googletv-license
+          echo -e "\n33b6a2b64607f11b759f320ef9dffde5ae4731a5" > $HOME/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
 
       - name: Run Buildozer Build
         run: |
           rm -rf .buildozer/android/platform/python-for-android
           mkdir -p .buildozer/android/platform/
           git clone --branch master https://github.com/kivy/python-for-android.git .buildozer/android/platform/python-for-android
-          # Buildozer automatically prompts for licenses if run with 'yes'
-          yes | buildozer android debug
+          
+          # Is baar bina kisi 'yes |' ke chalao kyunki licenses pehle se hi dummy file me accepted hain
+          buildozer android debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
