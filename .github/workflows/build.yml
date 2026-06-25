@@ -30,4 +30,10 @@ jobs:
           mkdir -p .buildozer/android/platform/
           git clone --branch master https://github.com/kivy/python-for-android.git .buildozer/android/platform/python-for-android
           buildozer android debug
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Snake-Game-APK
+          path: bin/*.apk
           
