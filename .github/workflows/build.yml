@@ -29,5 +29,5 @@ jobs:
           rm -rf .buildozer/android/platform/python-for-android
           mkdir -p .buildozer/android/platform/
           git clone --branch master https://github.com/kivy/python-for-android.git .buildozer/android/platform/python-for-android
-          buildozer android debug --verbose
+          buildozer android debug
           
